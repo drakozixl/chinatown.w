@@ -1,3 +1,5 @@
+// ─── Constants ───────────────────────────────────────────────────────────────
+
 const LOGO_URL = 'https://www.image2url.com/r2/default/images/1776781342340-eff4309f-5ae6-44db-bccb-8fb24ed120dc.png';
 const COVER_BASE = 'https://cdn.jsdelivr.net/gh/freebuisness/covers@main';
 const HTML_BASE = 'https://cdn.jsdelivr.net/gh/freebuisness/html@main';
@@ -28,21 +30,21 @@ const CLOAKS = [
 ];
 
 const PARTICLE_TYPES = [
-  { id: 'none', name: 'None', icon: '\u2715' },
-  { id: 'bubbles', name: 'Bubbles', icon: '\u25C9' },
-  { id: 'stars', name: 'Stars', icon: '\u2605' },
-  { id: 'snow', name: 'Snow', icon: '\u2744' },
-  { id: 'matrix', name: 'Matrix', icon: '\u2588' },
+  { id: 'none', name: 'None', icon: 'fa-solid fa-ban' },
+  { id: 'bubbles', name: 'Bubbles', icon: 'fa-solid fa-circle' },
+  { id: 'stars', name: 'Stars', icon: 'fa-solid fa-star' },
+  { id: 'snow', name: 'Snow', icon: 'fa-solid fa-snowflake' },
+  { id: 'matrix', name: 'Matrix', icon: 'fa-solid fa-terminal' },
 ];
 
 const TABS = [
-  { id: 'home', label: 'Home', icon: '\u2302' },
-  { id: 'games', label: 'Games', icon: '\uD83C\uDFAE' },
-  { id: 'chat', label: 'Chat', icon: '\uD83D\uDCAC' },
-  { id: 'media', label: 'Media', icon: '\uD83C\uDFAC' },
-  { id: 'apps', label: 'Apps', icon: '\u25A6' },
-  { id: 'partners', label: 'Partners', icon: '\uD83E\uDD1D' },
-  { id: 'settings', label: 'Settings', icon: '\u2699' },
+  { id: 'home', label: 'Home', icon: 'fa-solid fa-house' },
+  { id: 'games', label: 'Games', icon: 'fa-solid fa-gamepad' },
+  { id: 'chat', label: 'Chat', icon: 'fa-solid fa-comment' },
+  { id: 'media', label: 'Media', icon: 'fa-solid fa-film' },
+  { id: 'apps', label: 'Apps', icon: 'fa-solid fa-grip' },
+  { id: 'partners', label: 'Partners', icon: 'fa-solid fa-handshake' },
+  { id: 'settings', label: 'Settings', icon: 'fa-solid fa-gear' },
 ];
 
 // ─── State ───────────────────────────────────────────────────────────────────
@@ -379,10 +381,10 @@ function clearAllData() {
 // ─── Render Tabs ─────────────────────────────────────────────────────────────
 
 function renderTabs() {
-  const nav = document.getElementById('tabs');
-  nav.innerHTML = TABS.map(t =>
-    `<button class="tab-btn ${activeTab===t.id?'active':''}" onclick="switchTab('${t.id}')"><span class="tab-icon">${t.icon}</span> <span class="tab-label">${t.label}</span></button>`
-  ).join('');
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    const tab = btn.getAttribute('onclick').match(/'([^']+)'/)?.[1];
+    btn.classList.toggle('active', tab === activeTab);
+  });
 }
 
 function switchTab(id) {
@@ -460,7 +462,7 @@ function renderHome() {
         <h1 class="home-title">Welcome to China Town</h1>
         <p class="home-subtitle">this is in beta lilbro dont expect it to be good</p>
       </div>
-      <button class="btn btn-primary btn-lg" onclick="switchTab('games')">${TABS[1].icon} Play Games</button>
+      <button class="btn btn-primary btn-lg" onclick="switchTab('games')"><i class="fa-solid fa-gamepad"></i> Play Games</button>
       <div class="featured-section">
         <h2 class="featured-title">Featured Games</h2>
         ${cards}
@@ -481,7 +483,7 @@ function renderGames() {
   let selectedTagsHtml = '';
   if (selectedTags.length > 0) {
     selectedTagsHtml = `<div class="selected-tags">
-      ${selectedTags.map(t => `<span class="tag-badge" onclick="toggleTag('${t}')">${t} \u2715</span>`).join('')}
+      ${selectedTags.map(t => `<span class="tag-badge" onclick="toggleTag('${t}')">${t} <i class="fa-solid fa-xmark" style="font-size:0.6rem;"></i></span>`).join('')}
       <span class="tag-badge clear" onclick="selectedTags=[];renderContent()">Clear All</span>
     </div>`;
   }
@@ -490,17 +492,17 @@ function renderGames() {
     <div>
       <div class="games-toolbar">
         <div class="search-box">
-          <span class="search-icon">\uD83D\uDD0D</span>
+          <span class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
           <input type="text" placeholder="Search games..." value="${searchQuery}" oninput="searchQuery=this.value;filterAndSort();renderContent()">
         </div>
         <div class="dropdown-wrap">
-          <button class="btn btn-outline btn-sm" onclick="sortDropdownOpen=!sortDropdownOpen;tagDropdownOpen=false;renderContent()">Sort: ${sortBy.charAt(0).toUpperCase()+sortBy.slice(1)} \u25BC</button>
+          <button class="btn btn-outline btn-sm" onclick="sortDropdownOpen=!sortDropdownOpen;tagDropdownOpen=false;renderContent()"><i class="fa-solid fa-arrow-down-wide-short"></i> Sort: ${sortBy.charAt(0).toUpperCase()+sortBy.slice(1)}</button>
           ${sortDropdownOpen ? `<div class="dropdown-menu">
             ${['name','id','popular'].map(s => `<button class="dropdown-item ${sortBy===s?'active':''}" onclick="sortBy='${s}';sortDropdownOpen=false;renderContent()">${s.charAt(0).toUpperCase()+s.slice(1)}</button>`).join('')}
           </div>` : ''}
         </div>
         <div class="dropdown-wrap">
-          <button class="btn btn-outline btn-sm" onclick="tagDropdownOpen=!tagDropdownOpen;sortDropdownOpen=false;renderContent()">Tags ${selectedTags.length>0?`(${selectedTags.length})`:''} \u25BC</button>
+          <button class="btn btn-outline btn-sm" onclick="tagDropdownOpen=!tagDropdownOpen;sortDropdownOpen=false;renderContent()"><i class="fa-solid fa-tags"></i> Tags ${selectedTags.length>0?`(${selectedTags.length})`:''}</button>
           ${tagDropdownOpen ? `<div class="dropdown-menu large">
             ${availableTags.length === 0 ? '<div class="dropdown-item">No tags</div>' : availableTags.map(t => `<button class="dropdown-item ${selectedTags.includes(t)?'active':''}" onclick="toggleTag('${t}')"><span class="tag-check ${selectedTags.includes(t)?'checked':''}"></span>${t}</button>`).join('')}
           </div>` : ''}
@@ -515,8 +517,8 @@ function renderChat() {
   return `
     <div>
       <div class="chat-controls">
-        <button class="btn btn-outline btn-sm" onclick="fullscreenChat()">Fullscreen</button>
-        <button class="btn btn-outline btn-sm" onclick="refreshChat()">Refresh</button>
+        <button class="btn btn-outline btn-sm" onclick="fullscreenChat()"><i class="fa-solid fa-expand"></i> Fullscreen</button>
+        <button class="btn btn-outline btn-sm" onclick="refreshChat()"><i class="fa-solid fa-rotate-right"></i> Refresh</button>
       </div>
       <div id="chat-container" class="chat-container"></div>
     </div>`;
@@ -526,8 +528,8 @@ function renderMedia() {
   return `
     <div>
       <div class="chat-controls">
-        <button class="btn btn-outline btn-sm" onclick="document.querySelector('.media-container').requestFullscreen()">Fullscreen</button>
-        <button class="btn btn-outline btn-sm" onclick="const f=document.querySelector('.media-container iframe');const s=f.src;f.src='';setTimeout(()=>f.src=s,100)">Refresh</button>
+        <button class="btn btn-outline btn-sm" onclick="document.querySelector('.media-container').requestFullscreen()"><i class="fa-solid fa-expand"></i> Fullscreen</button>
+        <button class="btn btn-outline btn-sm" onclick="const f=document.querySelector('.media-container iframe');const s=f.src;f.src='';setTimeout(()=>f.src=s,100)"><i class="fa-solid fa-rotate-right"></i> Refresh</button>
       </div>
       <div class="media-container">
         <iframe src="https://mlbmovies.com/featured-movies/" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
@@ -550,7 +552,7 @@ function renderPartners() {
       <h2>No partners yet!</h2>
       <p>To become a partner, join the Discord:</p>
       <a href="${DISCORD_URL}" target="_blank" rel="noopener noreferrer">
-        <button class="btn btn-primary">Join Discord</button>
+        <button class="btn btn-primary"><i class="fa-solid fa-comment"></i> Join Discord</button>
       </a>
     </div>`;
 }
@@ -560,7 +562,7 @@ function renderSettings() {
     <div class="settings-wrap">
       <!-- Theme -->
       <div class="settings-section">
-        <h2><span class="s-icon">\uD83C\uDFA8</span> Theme Picker</h2>
+        <h2><i class="fa-solid fa-palette s-icon"></i> Theme Picker</h2>
         <div class="theme-grid">
           ${Object.entries(THEMES).map(([k, t]) => `
             <button class="theme-card ${currentTheme===k?'active':''}" onclick="setTheme('${k}')">
@@ -573,21 +575,21 @@ function renderSettings() {
 
       <!-- Particles -->
       <div class="settings-section">
-        <h2><span class="s-icon">\u2728</span> Background Particles</h2>
+        <h2><i class="fa-solid fa-wand-magic-sparkles s-icon"></i> Background Particles</h2>
         <div class="particle-grid">
           ${PARTICLE_TYPES.map(p => `
             <button class="particle-card ${particleType===p.id?'active':''}" onclick="setParticleType('${p.id}')">
-              <span class="p-icon">${p.icon}</span>
+              <i class="${p.icon} p-icon"></i>
               <div class="p-name">${p.name}</div>
             </button>
           `).join('')}
         </div>
-        <button class="btn btn-outline btn-sm" style="margin-top:10px;" onclick="setParticleType('none')">\u2715 Remove Particles</button>
+        <button class="btn btn-outline btn-sm" style="margin-top:10px;" onclick="setParticleType('none')"><i class="fa-solid fa-xmark"></i> Remove Particles</button>
       </div>
 
       <!-- Cloak -->
       <div class="settings-section">
-        <h2><span class="s-icon">\uD83D\uDEE1</span> Tab Cloak</h2>
+        <h2><i class="fa-solid fa-shield-halved s-icon"></i> Tab Cloak</h2>
         <p class="desc">Disguise your browser tab to look like another website.</p>
         <div class="cloak-grid">
           ${CLOAKS.map(c => `
@@ -603,35 +605,35 @@ function renderSettings() {
         ${activeCloak ? `
           <div class="cloak-status">
             <span class="tag-badge">Active: ${activeCloak}</span>
-            <button class="btn btn-outline btn-sm btn-danger" onclick="removeCloak()">\u2715 Remove Cloak</button>
+            <button class="btn btn-outline btn-sm btn-danger" onclick="removeCloak()"><i class="fa-solid fa-xmark"></i> Remove Cloak</button>
           </div>
         ` : ''}
       </div>
 
       <!-- Panic Key -->
       <div class="settings-section">
-        <h2><span class="s-icon">\u2328</span> Panic Key</h2>
+        <h2><i class="fa-solid fa-keyboard s-icon"></i> Panic Key</h2>
         <p class="desc">Set a key that instantly redirects to Google when pressed.</p>
         <div class="panic-row">
           <input type="text" id="panic-input" value="${panicKey}" maxlength="1">
-          <button class="btn btn-primary" onclick="savePanicKey()">Save</button>
+          <button class="btn btn-primary" onclick="savePanicKey()"><i class="fa-solid fa-floppy-disk"></i> Save</button>
           <span class="panic-current">Current: <b>${panicKey===' '?'Space':panicKey}</b></span>
         </div>
       </div>
 
       <!-- About:blank -->
       <div class="settings-section">
-        <h2><span class="s-icon">\u2197</span> Open in about:blank</h2>
+        <h2><i class="fa-solid fa-up-right-from-square s-icon"></i> Open in about:blank</h2>
         <p class="desc">Open this site in a new about:blank window to hide it from your history.</p>
-        <button class="btn btn-primary" onclick="openAboutBlank()">Open in about:blank</button>
+        <button class="btn btn-primary" onclick="openAboutBlank()"><i class="fa-solid fa-up-right-from-square"></i> Open in about:blank</button>
       </div>
 
       <!-- Reset -->
       <div class="settings-section">
-        <h2><span class="s-icon">\uD83D\uDDD1</span> Data & Reset</h2>
+        <h2><i class="fa-solid fa-trash-can s-icon"></i> Data & Reset</h2>
         <div style="display:flex;flex-direction:column;gap:10px;">
-          <button class="btn btn-outline" style="width:100%;" onclick="resetSettings()">Reset All Settings</button>
-          <button class="btn btn-outline btn-danger" style="width:100%;" onclick="clearAllData()">Clear All China Town Data</button>
+          <button class="btn btn-outline" style="width:100%;" onclick="resetSettings()"><i class="fa-solid fa-rotate-right"></i> Reset All Settings</button>
+          <button class="btn btn-outline btn-danger" style="width:100%;" onclick="clearAllData()"><i class="fa-solid fa-trash-can"></i> Clear All China Town Data</button>
         </div>
       </div>
     </div>`;
