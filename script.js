@@ -1,5 +1,3 @@
-// ─── Constants ───────────────────────────────────────────────────────────────
-
 const LOGO_URL = 'https://www.image2url.com/r2/default/images/1776781342340-eff4309f-5ae6-44db-bccb-8fb24ed120dc.png';
 const COVER_BASE = 'https://cdn.jsdelivr.net/gh/freebuisness/covers@main';
 const HTML_BASE = 'https://cdn.jsdelivr.net/gh/freebuisness/html@main';
@@ -11,14 +9,14 @@ const WIDGETBOT_CHANNEL = '1487435824982397131';
 const FEATURED_GAME_NAMES = ['10 Minutes Till Dawn', '1v1lol', 'Drive Mad', 'Subway Surfers', 'Slope', 'Cookie Clicker'];
 
 const THEMES = {
-  'red-black': { name: 'Red & Black', primary: '#DC2626', primaryHover: '#B91C1C', background: '#0a0a0a', card: '#141414', foreground: '#f0f0f0', secondary: '#1a1a1a', muted: '#1e1e1e', accent: '#222222', border: 'rgba(255,255,255,0.08)', ring: '#DC2626' },
-  'blue-dark': { name: 'Blue & Dark', primary: '#2563EB', primaryHover: '#1D4ED8', background: '#0a0a0a', card: '#141414', foreground: '#f0f0f0', secondary: '#1a1a1a', muted: '#1e1e1e', accent: '#222222', border: 'rgba(255,255,255,0.08)', ring: '#2563EB' },
-  'purple-dark': { name: 'Purple & Dark', primary: '#9333EA', primaryHover: '#7E22CE', background: '#0a0a0a', card: '#141414', foreground: '#f0f0f0', secondary: '#1a1a1a', muted: '#1e1e1e', accent: '#222222', border: 'rgba(255,255,255,0.08)', ring: '#9333EA' },
-  'green-dark': { name: 'Green & Dark', primary: '#16A34A', primaryHover: '#15803D', background: '#0a0a0a', card: '#141414', foreground: '#f0f0f0', secondary: '#1a1a1a', muted: '#1e1e1e', accent: '#222222', border: 'rgba(255,255,255,0.08)', ring: '#16A34A' },
-  'orange-dark': { name: 'Orange & Dark', primary: '#EA580C', primaryHover: '#C2410C', background: '#0a0a0a', card: '#141414', foreground: '#f0f0f0', secondary: '#1a1a1a', muted: '#1e1e1e', accent: '#222222', border: 'rgba(255,255,255,0.08)', ring: '#EA580C' },
-  'pink-dark': { name: 'Pink & Dark', primary: '#EC4899', primaryHover: '#DB2777', background: '#0a0a0a', card: '#141414', foreground: '#f0f0f0', secondary: '#1a1a1a', muted: '#1e1e1e', accent: '#222222', border: 'rgba(255,255,255,0.08)', ring: '#EC4899' },
-  'cyan-dark': { name: 'Cyan & Dark', primary: '#06B6D4', primaryHover: '#0891B2', background: '#0a0a0a', card: '#141414', foreground: '#f0f0f0', secondary: '#1a1a1a', muted: '#1e1e1e', accent: '#222222', border: 'rgba(255,255,255,0.08)', ring: '#06B6D4' },
-  'yellow-dark': { name: 'Yellow & Dark', primary: '#EAB308', primaryHover: '#CA8A04', background: '#0a0a0a', card: '#141414', foreground: '#f0f0f0', secondary: '#1a1a1a', muted: '#1e1e1e', accent: '#222222', border: 'rgba(255,255,255,0.08)', ring: '#EAB308' },
+  'red-black': { name: 'Red & Black', primary: '#DC2626', primaryHover: '#ef4444', background: '#000', card: '#111', foreground: '#fff', secondary: '#1a1a1a', muted: '#222', accent: '#2a2a2a', border: '#333', ring: '#DC2626' },
+  'blue-dark': { name: 'Blue & Dark', primary: '#2563EB', primaryHover: '#3b82f6', background: '#000', card: '#111', foreground: '#fff', secondary: '#1a1a1a', muted: '#222', accent: '#2a2a2a', border: '#333', ring: '#2563EB' },
+  'purple-dark': { name: 'Purple & Dark', primary: '#9333EA', primaryHover: '#a855f7', background: '#000', card: '#111', foreground: '#fff', secondary: '#1a1a1a', muted: '#222', accent: '#2a2a2a', border: '#333', ring: '#9333EA' },
+  'green-dark': { name: 'Green & Dark', primary: '#16A34A', primaryHover: '#22c55e', background: '#000', card: '#111', foreground: '#fff', secondary: '#1a1a1a', muted: '#222', accent: '#2a2a2a', border: '#333', ring: '#16A34A' },
+  'orange-dark': { name: 'Orange & Dark', primary: '#EA580C', primaryHover: '#f97316', background: '#000', card: '#111', foreground: '#fff', secondary: '#1a1a1a', muted: '#222', accent: '#2a2a2a', border: '#333', ring: '#EA580C' },
+  'pink-dark': { name: 'Pink & Dark', primary: '#EC4899', primaryHover: '#f472b6', background: '#000', card: '#111', foreground: '#fff', secondary: '#1a1a1a', muted: '#222', accent: '#2a2a2a', border: '#333', ring: '#EC4899' },
+  'cyan-dark': { name: 'Cyan & Dark', primary: '#06B6D4', primaryHover: '#22d3ee', background: '#000', card: '#111', foreground: '#fff', secondary: '#1a1a1a', muted: '#222', accent: '#2a2a2a', border: '#333', ring: '#06B6D4' },
+  'yellow-dark': { name: 'Yellow & Dark', primary: '#EAB308', primaryHover: '#facc15', background: '#000', card: '#111', foreground: '#fff', secondary: '#1a1a1a', muted: '#222', accent: '#2a2a2a', border: '#333', ring: '#EAB308' },
 };
 
 const CLOAKS = [
@@ -30,21 +28,21 @@ const CLOAKS = [
 ];
 
 const PARTICLE_TYPES = [
-  { id: 'none', name: 'None', icon: 'fas fa-ban' },
-  { id: 'bubbles', name: 'Bubbles', icon: 'fas fa-circle' },
-  { id: 'stars', name: 'Stars', icon: 'fas fa-star' },
-  { id: 'snow', name: 'Snow', icon: 'fas fa-snowflake' },
-  { id: 'matrix', name: 'Matrix', icon: 'fas fa-terminal' },
+  { id: 'none', name: 'None', icon: '\u2715' },
+  { id: 'bubbles', name: 'Bubbles', icon: '\u25C9' },
+  { id: 'stars', name: 'Stars', icon: '\u2605' },
+  { id: 'snow', name: 'Snow', icon: '\u2744' },
+  { id: 'matrix', name: 'Matrix', icon: '\u2588' },
 ];
 
 const TABS = [
-  { id: 'home', label: 'Home', icon: 'fas fa-house' },
-  { id: 'games', label: 'Games', icon: 'fas fa-gamepad' },
-  { id: 'chat', label: 'Chat', icon: 'fas fa-comment' },
-  { id: 'media', label: 'Media', icon: 'fas fa-film' },
-  { id: 'apps', label: 'Apps', icon: 'fas fa-grid-2' },
-  { id: 'partners', label: 'Partners', icon: 'fas fa-handshake' },
-  { id: 'settings', label: 'Settings', icon: 'fas fa-gear' },
+  { id: 'home', label: 'Home', icon: '\u2302' },
+  { id: 'games', label: 'Games', icon: '\uD83C\uDFAE' },
+  { id: 'chat', label: 'Chat', icon: '\uD83D\uDCAC' },
+  { id: 'media', label: 'Media', icon: '\uD83C\uDFAC' },
+  { id: 'apps', label: 'Apps', icon: '\u25A6' },
+  { id: 'partners', label: 'Partners', icon: '\uD83E\uDD1D' },
+  { id: 'settings', label: 'Settings', icon: '\u2699' },
 ];
 
 // ─── State ───────────────────────────────────────────────────────────────────
@@ -343,9 +341,9 @@ function showDialog(type) {
   const title = document.getElementById('dialog-title');
   const desc = document.getElementById('dialog-desc');
   overlay.classList.remove('hidden');
-  if (type === 'dmca') { title.innerHTML = '<i class="fas fa-scale-balanced"></i> DMCA'; desc.textContent = 'If you own or developed a game on China Town and would like it removed, please join our Discord or email us.'; }
-  else if (type === 'contact') { title.innerHTML = '<i class="fas fa-envelope"></i> Contact'; desc.textContent = 'Discord: https://discord.gg/FwdtmV7e'; }
-  else if (type === 'privacy') { title.innerHTML = '<i class="fas fa-shield-halved"></i> Privacy Policy'; desc.textContent = 'We do not collect personal information. Game data is fetched from public CDNs. Settings are stored locally in your browser.'; }
+  if (type === 'dmca') { title.innerHTML = 'DMCA'; desc.textContent = 'If you own or developed a game on China Town and would like it removed, please join our Discord or email us.'; }
+  else if (type === 'contact') { title.innerHTML = 'Contact'; desc.textContent = 'Discord: https://discord.gg/FwdtmV7e'; }
+  else if (type === 'privacy') { title.innerHTML = 'Privacy Policy'; desc.textContent = 'We do not collect personal information. Game data is fetched from public CDNs. Settings are stored locally in your browser.'; }
 }
 
 function closeDialog() { document.getElementById('dialog-overlay').classList.add('hidden'); }
@@ -383,7 +381,7 @@ function clearAllData() {
 function renderTabs() {
   const nav = document.getElementById('tabs');
   nav.innerHTML = TABS.map(t =>
-    `<button class="tab-btn ${activeTab===t.id?'active':''}" onclick="switchTab('${t.id}')"><i class="${t.icon}"></i> <span class="tab-label">${t.label}</span></button>`
+    `<button class="tab-btn ${activeTab===t.id?'active':''}" onclick="switchTab('${t.id}')"><span class="tab-icon">${t.icon}</span> <span class="tab-label">${t.label}</span></button>`
   ).join('');
 }
 
@@ -462,9 +460,9 @@ function renderHome() {
         <h1 class="home-title">Welcome to China Town</h1>
         <p class="home-subtitle">this is in beta lilbro dont expect it to be good</p>
       </div>
-      <button class="btn btn-primary btn-lg" onclick="switchTab('games')"><i class="fas fa-gamepad"></i> Play Games</button>
+      <button class="btn btn-primary btn-lg" onclick="switchTab('games')">${TABS[1].icon} Play Games</button>
       <div class="featured-section">
-        <h2 class="featured-title"><i class="fas fa-fire"></i> Featured Games</h2>
+        <h2 class="featured-title">Featured Games</h2>
         ${cards}
       </div>
     </div>`;
@@ -475,7 +473,7 @@ function renderGames() {
   if (loading) {
     cards = '<div class="loading-wrap"><div class="spinner"></div> Loading games...</div>';
   } else if (filteredGames.length === 0) {
-    cards = '<div class="no-games"><p><i class="fas fa-gamepad" style="font-size:2rem;"></i></p><p>No games found</p></div>';
+    cards = '<div class="no-games"><p>No games found</p></div>';
   } else {
     cards = `<div class="game-grid">${filteredGames.map(g => gameCard(g, true)).join('')}</div>`;
   }
@@ -483,8 +481,8 @@ function renderGames() {
   let selectedTagsHtml = '';
   if (selectedTags.length > 0) {
     selectedTagsHtml = `<div class="selected-tags">
-      ${selectedTags.map(t => `<span class="tag-badge" onclick="toggleTag('${t}')"><i class="fas fa-xmark" style="font-size:0.6rem;"></i> ${t}</span>`).join('')}
-      <span class="tag-badge clear" onclick="selectedTags=[];renderContent()"><i class="fas fa-xmark" style="font-size:0.6rem;"></i> Clear All</span>
+      ${selectedTags.map(t => `<span class="tag-badge" onclick="toggleTag('${t}')">${t} \u2715</span>`).join('')}
+      <span class="tag-badge clear" onclick="selectedTags=[];renderContent()">Clear All</span>
     </div>`;
   }
 
@@ -492,17 +490,17 @@ function renderGames() {
     <div>
       <div class="games-toolbar">
         <div class="search-box">
-          <span class="search-icon"><i class="fas fa-magnifying-glass"></i></span>
+          <span class="search-icon">\uD83D\uDD0D</span>
           <input type="text" placeholder="Search games..." value="${searchQuery}" oninput="searchQuery=this.value;filterAndSort();renderContent()">
         </div>
         <div class="dropdown-wrap">
-          <button class="btn btn-outline btn-sm" onclick="sortDropdownOpen=!sortDropdownOpen;tagDropdownOpen=false;renderContent()"><i class="fas fa-arrow-down-wide-short"></i> Sort: ${sortBy.charAt(0).toUpperCase()+sortBy.slice(1)}</button>
+          <button class="btn btn-outline btn-sm" onclick="sortDropdownOpen=!sortDropdownOpen;tagDropdownOpen=false;renderContent()">Sort: ${sortBy.charAt(0).toUpperCase()+sortBy.slice(1)} \u25BC</button>
           ${sortDropdownOpen ? `<div class="dropdown-menu">
             ${['name','id','popular'].map(s => `<button class="dropdown-item ${sortBy===s?'active':''}" onclick="sortBy='${s}';sortDropdownOpen=false;renderContent()">${s.charAt(0).toUpperCase()+s.slice(1)}</button>`).join('')}
           </div>` : ''}
         </div>
         <div class="dropdown-wrap">
-          <button class="btn btn-outline btn-sm" onclick="tagDropdownOpen=!tagDropdownOpen;sortDropdownOpen=false;renderContent()"><i class="fas fa-tags"></i> Tags ${selectedTags.length>0?`(${selectedTags.length})`:''}</button>
+          <button class="btn btn-outline btn-sm" onclick="tagDropdownOpen=!tagDropdownOpen;sortDropdownOpen=false;renderContent()">Tags ${selectedTags.length>0?`(${selectedTags.length})`:''} \u25BC</button>
           ${tagDropdownOpen ? `<div class="dropdown-menu large">
             ${availableTags.length === 0 ? '<div class="dropdown-item">No tags</div>' : availableTags.map(t => `<button class="dropdown-item ${selectedTags.includes(t)?'active':''}" onclick="toggleTag('${t}')"><span class="tag-check ${selectedTags.includes(t)?'checked':''}"></span>${t}</button>`).join('')}
           </div>` : ''}
@@ -517,8 +515,8 @@ function renderChat() {
   return `
     <div>
       <div class="chat-controls">
-        <button class="btn btn-outline btn-sm" onclick="fullscreenChat()"><i class="fas fa-expand"></i> Fullscreen</button>
-        <button class="btn btn-outline btn-sm" onclick="refreshChat()"><i class="fas fa-rotate-right"></i> Refresh</button>
+        <button class="btn btn-outline btn-sm" onclick="fullscreenChat()">Fullscreen</button>
+        <button class="btn btn-outline btn-sm" onclick="refreshChat()">Refresh</button>
       </div>
       <div id="chat-container" class="chat-container"></div>
     </div>`;
@@ -528,8 +526,8 @@ function renderMedia() {
   return `
     <div>
       <div class="chat-controls">
-        <button class="btn btn-outline btn-sm" onclick="document.querySelector('.media-container').requestFullscreen()"><i class="fas fa-expand"></i> Fullscreen</button>
-        <button class="btn btn-outline btn-sm" onclick="const f=document.querySelector('.media-container iframe');const s=f.src;f.src='';setTimeout(()=>f.src=s,100)"><i class="fas fa-rotate-right"></i> Refresh</button>
+        <button class="btn btn-outline btn-sm" onclick="document.querySelector('.media-container').requestFullscreen()">Fullscreen</button>
+        <button class="btn btn-outline btn-sm" onclick="const f=document.querySelector('.media-container iframe');const s=f.src;f.src='';setTimeout(()=>f.src=s,100)">Refresh</button>
       </div>
       <div class="media-container">
         <iframe src="https://mlbmovies.com/featured-movies/" sandbox="allow-same-origin allow-scripts allow-popups allow-forms"></iframe>
@@ -540,7 +538,6 @@ function renderMedia() {
 function renderApps() {
   return `
     <div class="placeholder-box">
-      <i class="fas fa-wrench" style="font-size:2rem;color:var(--primary);"></i>
       <h2>Apps Coming Soon!</h2>
       <p>this is in beta lilbro dont expect it to be good</p>
       <p>More apps are being worked on. Check back later!</p>
@@ -550,11 +547,10 @@ function renderApps() {
 function renderPartners() {
   return `
     <div class="partners-box">
-      <i class="fas fa-handshake" style="font-size:2.5rem;color:var(--primary);"></i>
       <h2>No partners yet!</h2>
       <p>To become a partner, join the Discord:</p>
       <a href="${DISCORD_URL}" target="_blank" rel="noopener noreferrer">
-        <button class="btn btn-primary"><i class="fas fa-comment"></i> Join Discord</button>
+        <button class="btn btn-primary">Join Discord</button>
       </a>
     </div>`;
 }
@@ -564,7 +560,7 @@ function renderSettings() {
     <div class="settings-wrap">
       <!-- Theme -->
       <div class="settings-section">
-        <h2><i class="fas fa-palette"></i> Theme Picker</h2>
+        <h2><span class="s-icon">\uD83C\uDFA8</span> Theme Picker</h2>
         <div class="theme-grid">
           ${Object.entries(THEMES).map(([k, t]) => `
             <button class="theme-card ${currentTheme===k?'active':''}" onclick="setTheme('${k}')">
@@ -577,65 +573,65 @@ function renderSettings() {
 
       <!-- Particles -->
       <div class="settings-section">
-        <h2><i class="fas fa-wand-magic-sparkles"></i> Background Particles</h2>
+        <h2><span class="s-icon">\u2728</span> Background Particles</h2>
         <div class="particle-grid">
           ${PARTICLE_TYPES.map(p => `
             <button class="particle-card ${particleType===p.id?'active':''}" onclick="setParticleType('${p.id}')">
-              <i class="${p.icon}"></i>
+              <span class="p-icon">${p.icon}</span>
               <div class="p-name">${p.name}</div>
             </button>
           `).join('')}
         </div>
-        <button class="btn btn-outline btn-sm" style="margin-top:0.75rem;" onclick="setParticleType('none')"><i class="fas fa-xmark"></i> Remove Particles</button>
+        <button class="btn btn-outline btn-sm" style="margin-top:10px;" onclick="setParticleType('none')">\u2715 Remove Particles</button>
       </div>
 
       <!-- Cloak -->
       <div class="settings-section">
-        <h2><i class="fas fa-shield-halved"></i> Tab Cloak</h2>
-        <p class="desc">Disguise your browser tab to look like another website. Click to apply the cloak.</p>
+        <h2><span class="s-icon">\uD83D\uDEE1</span> Tab Cloak</h2>
+        <p class="desc">Disguise your browser tab to look like another website.</p>
         <div class="cloak-grid">
           ${CLOAKS.map(c => `
             <button class="cloak-card ${activeCloak===c.name?'active':''}" onclick="setCloak('${c.name}')">
-              <div class="cloak-icon" style="background:${c.color}15">
+              <div class="cloak-icon" style="background:${c.color}22">
                 <img src="${c.favicon}" alt="${c.name}" onerror="this.style.display='none'">
               </div>
               <div class="cloak-name">${c.name}</div>
-              ${activeCloak===c.name?'<div class="cloak-active"><i class="fas fa-check"></i> Active</div>':''}
+              ${activeCloak===c.name?'<div class="cloak-active">Active</div>':''}
             </button>
           `).join('')}
         </div>
         ${activeCloak ? `
           <div class="cloak-status">
-            <span class="tag-badge"><i class="fas fa-check" style="font-size:0.6rem;"></i> Active: ${activeCloak}</span>
-            <button class="btn btn-outline btn-sm btn-danger" onclick="removeCloak()"><i class="fas fa-xmark"></i> Remove Cloak</button>
+            <span class="tag-badge">Active: ${activeCloak}</span>
+            <button class="btn btn-outline btn-sm btn-danger" onclick="removeCloak()">\u2715 Remove Cloak</button>
           </div>
         ` : ''}
       </div>
 
       <!-- Panic Key -->
       <div class="settings-section">
-        <h2><i class="fas fa-keyboard"></i> Panic Key</h2>
+        <h2><span class="s-icon">\u2328</span> Panic Key</h2>
         <p class="desc">Set a key that instantly redirects to Google when pressed.</p>
         <div class="panic-row">
           <input type="text" id="panic-input" value="${panicKey}" maxlength="1">
-          <button class="btn btn-primary" onclick="savePanicKey()"><i class="fas fa-floppy-disk"></i> Save</button>
+          <button class="btn btn-primary" onclick="savePanicKey()">Save</button>
           <span class="panic-current">Current: <b>${panicKey===' '?'Space':panicKey}</b></span>
         </div>
       </div>
 
       <!-- About:blank -->
       <div class="settings-section">
-        <h2><i class="fas fa-up-right-from-square"></i> Open in about:blank</h2>
+        <h2><span class="s-icon">\u2197</span> Open in about:blank</h2>
         <p class="desc">Open this site in a new about:blank window to hide it from your history.</p>
-        <button class="btn btn-primary" onclick="openAboutBlank()"><i class="fas fa-up-right-from-square"></i> Open in about:blank</button>
+        <button class="btn btn-primary" onclick="openAboutBlank()">Open in about:blank</button>
       </div>
 
       <!-- Reset -->
       <div class="settings-section">
-        <h2><i class="fas fa-trash-can"></i> Data & Reset</h2>
-        <div style="display:flex;flex-direction:column;gap:0.75rem;">
-          <button class="btn btn-outline" style="width:100%;" onclick="resetSettings()"><i class="fas fa-rotate-right"></i> Reset All Settings</button>
-          <button class="btn btn-outline btn-danger" style="width:100%;" onclick="clearAllData()"><i class="fas fa-trash-can"></i> Clear All China Town Data</button>
+        <h2><span class="s-icon">\uD83D\uDDD1</span> Data & Reset</h2>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <button class="btn btn-outline" style="width:100%;" onclick="resetSettings()">Reset All Settings</button>
+          <button class="btn btn-outline btn-danger" style="width:100%;" onclick="clearAllData()">Clear All China Town Data</button>
         </div>
       </div>
     </div>`;
