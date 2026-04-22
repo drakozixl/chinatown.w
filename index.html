@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>chinatown.w</title>
   <link rel="icon" href="https://www.image2url.com/r2/default/images/1776781342340-eff4309f-5ae6-44db-bccb-8fb24ed120dc.png">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -27,24 +26,24 @@
     <div class="game-header">
       <div class="game-info"><h2 id="game-title"></h2></div>
       <div class="game-controls">
-        <button onclick="fullscreenGame()" title="Fullscreen"><i class="fas fa-expand"></i></button>
-        <button onclick="openGameAboutBlank()" title="about:blank"><i class="fas fa-up-right-from-square"></i></button>
-        <button onclick="refreshGame()" title="Refresh"><i class="fas fa-rotate-right"></i></button>
-        <button onclick="closeGame()" title="Close"><i class="fas fa-xmark"></i></button>
+        <button onclick="fullscreenGame()" title="Fullscreen">&#x26F6;</button>
+        <button onclick="openGameAboutBlank()" title="about:blank">&#x2197;</button>
+        <button onclick="refreshGame()" title="Refresh">&#x21BB;</button>
+        <button onclick="closeGame()" title="Close">&#x2715;</button>
       </div>
     </div>
     <iframe id="game-iframe" allowfullscreen></iframe>
   </div>
 
   <footer>
-    <button onclick="showDialog('dmca')"><i class="fas fa-scale-balanced"></i> DMCA</button>
-    <button onclick="showDialog('contact')"><i class="fas fa-envelope"></i> Contact</button>
-    <button onclick="showDialog('privacy')"><i class="fas fa-shield-halved"></i> Privacy Policy</button>
+    <button onclick="showDialog('dmca')">DMCA</button>
+    <button onclick="showDialog('contact')">Contact</button>
+    <button onclick="showDialog('privacy')">Privacy Policy</button>
   </footer>
 
   <div id="dialog-overlay" class="hidden" onclick="closeDialog()">
     <div class="dialog-box" onclick="event.stopPropagation()">
-      <button class="dialog-close" onclick="closeDialog()"><i class="fas fa-xmark"></i></button>
+      <button class="dialog-close" onclick="closeDialog()">&#x2715;</button>
       <h2 id="dialog-title"></h2>
       <p id="dialog-desc"></p>
       <button onclick="closeDialog()">Got it!</button>
@@ -53,8 +52,8 @@
 
   <div id="beta-overlay" class="hidden" onclick="closeBeta()">
     <div class="dialog-box" onclick="event.stopPropagation()">
-      <button class="dialog-close" onclick="closeBeta()"><i class="fas fa-xmark"></i></button>
-      <h2><i class="fas fa-flask"></i> Beta Mode</h2>
+      <button class="dialog-close" onclick="closeBeta()">&#x2715;</button>
+      <h2>Beta Mode</h2>
       <p>This is in beta lilbro dont expect it to be good</p>
       <button onclick="closeBeta()">Got it!</button>
     </div>
