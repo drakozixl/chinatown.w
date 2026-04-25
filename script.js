@@ -10,12 +10,13 @@ const WIDGETBOT_CHANNEL = '1487435824982397131';
 
 const FEATURED_GAME_NAMES = ['10 Minutes Till Dawn', '1v1lol', 'Drive Mad', 'Subway Surfers', 'Slope', 'Cookie Clicker'];
 
+// Only cloaks with reliable favicons that actually show an icon
 const CLOAKS = [
-  { name: 'i-Ready', title: 'i-Ready', favicon: 'https://login.i-ready.com/favicon.ico', color: '#0D6EFD' },
   { name: 'Clever', title: 'Clever | Portal', favicon: 'https://clever.com/favicon.ico', color: '#2E77D6' },
-  { name: 'McGraw Hill', title: 'McGraw Hill', favicon: 'https://www.mheducation.com/favicon.ico', color: '#E31937' },
-  { name: 'Google Docs', title: 'Google Docs', favicon: 'https://fonts.googleapis.com/favicon?folder=docs', color: '#4285F4' },
-  { name: 'Google Drive', title: 'Google Drive', favicon: 'https://fonts.googleapis.com/favicon?folder=drive', color: '#0F9D58' },
+  { name: 'Google', title: 'Google', favicon: 'https://www.google.com/favicon.ico', color: '#4285F4' },
+  { name: 'Google Drive', title: 'Google Drive', favicon: 'https://drive.google.com/favicon.ico', color: '#0F9D58' },
+  { name: 'YouTube', title: 'YouTube', favicon: 'https://www.youtube.com/favicon.ico', color: '#FF0000' },
+  { name: 'Wikipedia', title: 'Wikipedia', favicon: 'https://en.wikipedia.org/favicon.ico', color: '#636466' },
 ];
 
 // ─── State ───────────────────────────────────────────────────────────────────
@@ -34,120 +35,56 @@ let activeCloak = null;
 let panicKey = '`';
 let sortDropdownOpen = false;
 let tagDropdownOpen = false;
+let weatherData = null;
 
-// ─── Grey Particles Canvas ───────────────────────────────────────────────────
+// ─── Clock & Weather ─────────────────────────────────────────────────────────
 
-function initGreyParticles() {
-  const canvas = document.getElementById('particle-canvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-
-  const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
-  resize();
-  window.addEventListener('resize', resize);
-
-  // Grey shades
-  const greyShades = [
-    'rgba(180,180,180,', // light grey
-    'rgba(140,140,140,', // medium grey
-    'rgba(100,100,100,', // darker grey
-    'rgba(200,200,200,', // very light grey
-    'rgba(120,120,120,', // medium-dark grey
-    'rgba(160,160,160,', // soft grey
-    'rgba(80,80,80,',    // dark grey
-    'rgba(220,220,220,', // pale grey
-  ];
-
-  const particles = [];
-  const PARTICLE_COUNT = 60;
-
-  function createParticle(randomY) {
-    const shade = greyShades[Math.floor(Math.random() * greyShades.length)];
-    const size = Math.random() * 3 + 0.5;
-    const speed = Math.random() * 0.4 + 0.1;
-    const direction = Math.random() * Math.PI * 2;
-    return {
-      x: Math.random() * canvas.width,
-      y: randomY ? Math.random() * canvas.height : canvas.height + Math.random() * 50,
-      size: size,
-      baseSize: size,
-      speedX: Math.cos(direction) * speed,
-      speedY: Math.sin(direction) * speed - 0.15, // slight upward drift
-      shade: shade,
-      maxOpacity: Math.random() * 0.35 + 0.05,
-      opacity: 0,
-      phase: Math.random() * Math.PI * 2,
-      phaseSpeed: Math.random() * 0.008 + 0.003,
-      wobbleAmp: Math.random() * 0.8 + 0.2,
-      wobbleSpeed: Math.random() * 0.02 + 0.005,
-      life: 0,
-      maxLife: Math.random() * 800 + 400,
-      // Some particles drift slowly, some faster
-      drift: (Math.random() - 0.5) * 0.3,
-    };
+function updateClock() {
+  const el = document.getElementById('clock-time');
+  const dateEl = document.getElementById('clock-date');
+  if (!el) return;
+  const now = new Date();
+  const h = now.getHours().toString().padStart(2, '0');
+  const m = now.getMinutes().toString().padStart(2, '0');
+  const s = now.getSeconds().toString().padStart(2, '0');
+  el.textContent = `${h}:${m}:${s}`;
+  if (dateEl) {
+    const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    dateEl.textContent = `${days[now.getDay()]}, ${months[now.getMonth()]} ${now.getDate()}`;
   }
+}
 
-  for (let i = 0; i < PARTICLE_COUNT; i++) {
-    const p = createParticle(true);
-    p.life = Math.random() * p.maxLife * 0.5;
-    particles.push(p);
-  }
-
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    for (let i = 0; i < particles.length; i++) {
-      const p = particles[i];
-
-      // Update position
-      p.x += p.speedX + Math.sin(p.phase) * p.wobbleAmp * 0.3 + p.drift;
-      p.y += p.speedY;
-      p.phase += p.phaseSpeed;
-      p.life++;
-
-      // Smooth fade in/out
-      const lifeRatio = p.life / p.maxLife;
-      if (lifeRatio < 0.15) {
-        p.opacity = p.maxOpacity * (lifeRatio / 0.15);
-      } else if (lifeRatio > 0.7) {
-        p.opacity = p.maxOpacity * (1 - (lifeRatio - 0.7) / 0.3);
-      } else {
-        p.opacity = p.maxOpacity;
+async function fetchWeather() {
+  try {
+    const res = await fetch('https://wttr.in/?format=j1');
+    const data = await res.json();
+    if (data.current_condition && data.current_condition[0]) {
+      const c = data.current_condition[0];
+      const temp = c.temp_F;
+      const desc = c.weatherDesc && c.weatherDesc[0] ? c.weatherDesc[0].value : '';
+      const el = document.getElementById('weather-text');
+      if (el) {
+        el.textContent = `${temp}F - ${desc}`;
       }
-
-      // Gentle size pulse
-      const sizePulse = 1 + Math.sin(p.phase * 1.5) * 0.15;
-      const currentSize = p.baseSize * sizePulse;
-
-      // Reset if off-screen or life over
-      if (p.life >= p.maxLife || p.y < -50 || p.x < -50 || p.x > canvas.width + 50) {
-        particles[i] = createParticle(false);
-        particles[i].y = canvas.height + Math.random() * 30;
-        continue;
-      }
-
-      // Draw soft circle with glow
-      const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, currentSize * 4);
-      gradient.addColorStop(0, p.shade + p.opacity + ')');
-      gradient.addColorStop(0.3, p.shade + (p.opacity * 0.5) + ')');
-      gradient.addColorStop(1, p.shade + '0)');
-
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, currentSize * 4, 0, Math.PI * 2);
-      ctx.fillStyle = gradient;
-      ctx.fill();
-
-      // Core bright dot
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, currentSize, 0, Math.PI * 2);
-      ctx.fillStyle = p.shade + (p.opacity * 1.2) + ')';
-      ctx.fill();
+      weatherData = { temp, desc };
     }
-
-    requestAnimationFrame(animate);
+  } catch (e) {
+    const el = document.getElementById('weather-text');
+    if (el) el.textContent = 'N/A';
   }
+}
 
-  animate();
+function getWeatherIcon() {
+  if (!weatherData) return 'fa-cloud';
+  const d = weatherData.desc.toLowerCase();
+  if (d.includes('sun') || d.includes('clear')) return 'fa-sun';
+  if (d.includes('rain') || d.includes('shower')) return 'fa-cloud-rain';
+  if (d.includes('snow') || d.includes('blizzard')) return 'fa-snowflake';
+  if (d.includes('thunder') || d.includes('storm')) return 'fa-cloud-bolt';
+  if (d.includes('cloud') || d.includes('overcast')) return 'fa-cloud';
+  if (d.includes('fog') || d.includes('mist')) return 'fa-smog';
+  return 'fa-cloud';
 }
 
 // ─── Init ────────────────────────────────────────────────────────────────────
@@ -157,7 +94,9 @@ window.addEventListener('DOMContentLoaded', () => {
   renderTabs();
   renderContent();
   fetchGames();
-  initGreyParticles();
+  updateClock();
+  setInterval(updateClock, 1000);
+  fetchWeather();
 
   setTimeout(() => {
     const beta = document.getElementById('beta-overlay');
@@ -180,7 +119,6 @@ window.addEventListener('DOMContentLoaded', () => {
 function loadPreferences() {
   const sc = localStorage.getItem('chinatown-cloak');
   const sk = localStorage.getItem('chinatown-panic-key');
-  // Remove old theme/particle keys
   localStorage.removeItem('chinatown-theme');
   localStorage.removeItem('chinatown-particle');
   if (sc) { activeCloak = sc; applyCloak(sc); }
@@ -341,7 +279,7 @@ function savePanicKey() {
   renderContent();
 }
 
-// ─── Data Reset ──────────────────────────────────────────────────────────────
+// ─── Reset ───────────────────────────────────────────────────────────────────
 
 function resetSettings() {
   localStorage.removeItem('chinatown-cloak');
@@ -356,7 +294,7 @@ function clearAllData() {
   window.location.reload();
 }
 
-// ─── Render Tabs (Sidebar) ──────────────────────────────────────────────────
+// ─── Tabs ────────────────────────────────────────────────────────────────────
 
 function renderTabs() {
   document.querySelectorAll('.nav-icon').forEach(btn => {
@@ -391,7 +329,7 @@ function initChat() {
       wb.setAttribute('server', WIDGETBOT_SERVER);
       wb.setAttribute('channel', WIDGETBOT_CHANNEL);
       wb.setAttribute('width', '100%');
-      wb.setAttribute('height', '600');
+      wb.setAttribute('height', '560');
       container.appendChild(wb);
     }
   }, 500);
@@ -432,15 +370,12 @@ function renderHome() {
   return `
     <div class="home-tab">
       <div>
-        <div class="home-logo-frame">
-          <img src="${LOGO_URL}" alt="China Town">
-        </div>
-        <h1 class="home-title">Welcome to China Town</h1>
+        <h1 class="home-title">chinatown.w</h1>
         <p class="home-subtitle">this is in beta lilbro dont expect it to be good</p>
       </div>
       <button class="btn btn-primary btn-lg" onclick="switchTab('games')"><i class="fa-solid fa-gamepad"></i> Play Games</button>
       <div class="featured-section">
-        <h2 class="featured-title">Featured Games</h2>
+        <h2 class="featured-title">Featured</h2>
         ${cards}
       </div>
     </div>`;
@@ -459,26 +394,36 @@ function renderGames() {
   let selectedTagsHtml = '';
   if (selectedTags.length > 0) {
     selectedTagsHtml = `<div class="selected-tags">
-      ${selectedTags.map(t => `<span class="tag-badge" onclick="toggleTag('${t}')">${t} <i class="fa-solid fa-xmark" style="font-size:0.6rem;"></i></span>`).join('')}
-      <span class="tag-badge clear" onclick="selectedTags=[];renderContent()">Clear All</span>
+      ${selectedTags.map(t => `<span class="tag-badge" onclick="toggleTag('${t}')">${t} <i class="fa-solid fa-xmark" style="font-size:0.55rem;"></i></span>`).join('')}
+      <span class="tag-badge clear" onclick="selectedTags=[];renderContent()">Clear</span>
     </div>`;
   }
 
   return `
     <div>
+      <div class="clock-bar">
+        <div>
+          <div class="clock-time" id="clock-time">--:--:--</div>
+          <div class="clock-date" id="clock-date"></div>
+        </div>
+        <div class="clock-weather">
+          <i class="fa-solid ${getWeatherIcon()}"></i>
+          <span id="weather-text">Loading...</span>
+        </div>
+      </div>
       <div class="games-toolbar">
         <div class="search-box">
           <span class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
           <input type="text" placeholder="Search games..." value="${searchQuery}" oninput="searchQuery=this.value;filterAndSort();renderContent()">
         </div>
         <div class="dropdown-wrap">
-          <button class="btn btn-outline btn-sm" onclick="sortDropdownOpen=!sortDropdownOpen;tagDropdownOpen=false;renderContent()"><i class="fa-solid fa-arrow-down-wide-short"></i> Sort: ${sortBy.charAt(0).toUpperCase()+sortBy.slice(1)}</button>
+          <button class="btn btn-outline btn-sm" onclick="sortDropdownOpen=!sortDropdownOpen;tagDropdownOpen=false;renderContent()"><i class="fa-solid fa-arrow-down-wide-short"></i> ${sortBy.charAt(0).toUpperCase()+sortBy.slice(1)}</button>
           ${sortDropdownOpen ? `<div class="dropdown-menu">
             ${['name','id','popular'].map(s => `<button class="dropdown-item ${sortBy===s?'active':''}" onclick="sortBy='${s}';sortDropdownOpen=false;renderContent()">${s.charAt(0).toUpperCase()+s.slice(1)}</button>`).join('')}
           </div>` : ''}
         </div>
         <div class="dropdown-wrap">
-          <button class="btn btn-outline btn-sm" onclick="tagDropdownOpen=!tagDropdownOpen;sortDropdownOpen=false;renderContent()"><i class="fa-solid fa-tags"></i> Tags ${selectedTags.length>0?`(${selectedTags.length})`:''}</button>
+          <button class="btn btn-outline btn-sm" onclick="tagDropdownOpen=!tagDropdownOpen;sortDropdownOpen=false;renderContent()"><i class="fa-solid fa-tags"></i> Tags${selectedTags.length>0?` (${selectedTags.length})`:''}</button>
           ${tagDropdownOpen ? `<div class="dropdown-menu large">
             ${availableTags.length === 0 ? '<div class="dropdown-item">No tags</div>' : availableTags.map(t => `<button class="dropdown-item ${selectedTags.includes(t)?'active':''}" onclick="toggleTag('${t}')"><span class="tag-check ${selectedTags.includes(t)?'checked':''}"></span>${t}</button>`).join('')}
           </div>` : ''}
@@ -525,8 +470,34 @@ function renderPartners() {
 }
 
 function renderSettings() {
+  const totalGames = games.length;
+  const totalTags = availableTags.length;
+
   return `
     <div class="settings-wrap">
+      <!-- Site Stats -->
+      <div class="settings-section">
+        <h2><i class="fa-solid fa-chart-simple s-icon"></i> Site Stats</h2>
+        <div class="site-info-grid">
+          <div class="site-info-card">
+            <div class="info-val">${totalGames}</div>
+            <div class="info-label">Games</div>
+          </div>
+          <div class="site-info-card">
+            <div class="info-val">${totalTags}</div>
+            <div class="info-label">Tags</div>
+          </div>
+          <div class="site-info-card">
+            <div class="info-val">Beta</div>
+            <div class="info-label">Status</div>
+          </div>
+          <div class="site-info-card">
+            <div class="info-val">v2.0</div>
+            <div class="info-label">Version</div>
+          </div>
+        </div>
+      </div>
+
       <!-- Cloak -->
       <div class="settings-section">
         <h2><i class="fa-solid fa-shield-halved s-icon"></i> Tab Cloak</h2>
@@ -534,8 +505,8 @@ function renderSettings() {
         <div class="cloak-grid">
           ${CLOAKS.map(c => `
             <button class="cloak-card ${activeCloak===c.name?'active':''}" onclick="setCloak('${c.name}')">
-              <div class="cloak-icon" style="background:${c.color}22">
-                <img src="${c.favicon}" alt="${c.name}" onerror="this.style.display='none'">
+              <div class="cloak-icon">
+                <img src="${c.favicon}" alt="${c.name}" onerror="this.parentElement.innerHTML='<i class=\\'fa-solid fa-globe\\' style=\\'color:var(--text-dim);font-size:14px\\'></i>'">
               </div>
               <div class="cloak-name">${c.name}</div>
               ${activeCloak===c.name?'<div class="cloak-active">Active</div>':''}
@@ -545,7 +516,7 @@ function renderSettings() {
         ${activeCloak ? `
           <div class="cloak-status">
             <span class="tag-badge">Active: ${activeCloak}</span>
-            <button class="btn btn-outline btn-sm btn-danger" onclick="removeCloak()"><i class="fa-solid fa-xmark"></i> Remove Cloak</button>
+            <button class="btn btn-outline btn-sm btn-danger" onclick="removeCloak()"><i class="fa-solid fa-xmark"></i> Remove</button>
           </div>
         ` : ''}
       </div>
@@ -553,7 +524,7 @@ function renderSettings() {
       <!-- Panic Key -->
       <div class="settings-section">
         <h2><i class="fa-solid fa-keyboard s-icon"></i> Panic Key</h2>
-        <p class="desc">Set a key that instantly redirects to Google when pressed.</p>
+        <p class="desc">Press this key to instantly redirect to Google.</p>
         <div class="panic-row">
           <input type="text" id="panic-input" value="${panicKey}" maxlength="1">
           <button class="btn btn-primary" onclick="savePanicKey()"><i class="fa-solid fa-floppy-disk"></i> Save</button>
@@ -563,15 +534,27 @@ function renderSettings() {
 
       <!-- About:blank -->
       <div class="settings-section">
-        <h2><i class="fa-solid fa-up-right-from-square s-icon"></i> Open in about:blank</h2>
+        <h2><i class="fa-solid fa-up-right-from-square s-icon"></i> about:blank</h2>
         <p class="desc">Open this site in a new about:blank window to hide it from your history.</p>
         <button class="btn btn-primary" onclick="openAboutBlank()"><i class="fa-solid fa-up-right-from-square"></i> Open in about:blank</button>
+      </div>
+
+      <!-- Keyboard Shortcuts Info -->
+      <div class="settings-section">
+        <h2><i class="fa-solid fa-lightbulb s-icon"></i> Quick Tips</h2>
+        <p class="desc" style="margin-bottom:0;line-height:1.8;">
+          Press your panic key (<b style="color:var(--red)">${panicKey===' '?'Space':panicKey}</b>) to instantly escape to Google.<br>
+          Click the logo in the sidebar to go back home.<br>
+          Hover over game cards to preview them.<br>
+          Use the search bar to find games fast.<br>
+          Open games in about:blank to hide them from tab history.
+        </p>
       </div>
 
       <!-- Reset -->
       <div class="settings-section">
         <h2><i class="fa-solid fa-trash-can s-icon"></i> Data & Reset</h2>
-        <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;flex-direction:column;gap:8px;">
           <button class="btn btn-outline" style="width:100%;" onclick="resetSettings()"><i class="fa-solid fa-rotate-right"></i> Reset All Settings</button>
           <button class="btn btn-outline btn-danger" style="width:100%;" onclick="clearAllData()"><i class="fa-solid fa-trash-can"></i> Clear All China Town Data</button>
         </div>
@@ -604,3 +587,5 @@ function toggleTag(tag) {
   tagDropdownOpen = false;
   renderContent();
 }
+
+      
