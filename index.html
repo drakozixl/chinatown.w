@@ -10,10 +10,26 @@
 </head>
 <body>
 
-  <!-- Grey particle canvas -->
-  <canvas id="particle-canvas"></canvas>
+  <!-- CSS floating dust - no canvas, no lag -->
+  <div class="dust-layer">
+    <span class="d" style="--x:5%;--y:10%;--s:3px;--d:22s;--o:0.12"></span>
+    <span class="d" style="--x:15%;--y:30%;--s:2px;--d:28s;--o:0.08"></span>
+    <span class="d" style="--x:25%;--y:60%;--s:4px;--d:25s;--o:0.15"></span>
+    <span class="d" style="--x:35%;--y:80%;--s:2px;--d:30s;--o:0.06"></span>
+    <span class="d" style="--x:45%;--y:20%;--s:3px;--d:26s;--o:0.1"></span>
+    <span class="d" style="--x:55%;--y:50%;--s:2px;--d:32s;--o:0.09"></span>
+    <span class="d" style="--x:65%;--y:70%;--s:5px;--d:24s;--o:0.14"></span>
+    <span class="d" style="--x:75%;--y:15%;--s:2px;--d:29s;--o:0.07"></span>
+    <span class="d" style="--x:85%;--y:45%;--s:3px;--d:27s;--o:0.11"></span>
+    <span class="d" style="--x:95%;--y:90%;--s:2px;--d:31s;--o:0.05"></span>
+    <span class="d" style="--x:10%;--y:55%;--s:4px;--d:23s;--o:0.13"></span>
+    <span class="d" style="--x:30%;--y:40%;--s:2px;--d:33s;--o:0.08"></span>
+    <span class="d" style="--x:50%;--y:85%;--s:3px;--d:20s;--o:0.1"></span>
+    <span class="d" style="--x:70%;--y:35%;--s:2px;--d:35s;--o:0.06"></span>
+    <span class="d" style="--x:90%;--y:65%;--s:4px;--d:22s;--o:0.12"></span>
+  </div>
 
-  <!-- Sidebar Nav -->
+  <!-- Sidebar -->
   <nav class="sidebar" id="sidebar">
     <div class="sidebar-logo" onclick="switchTab('home')" title="Home">
       <div class="logo-frame">
@@ -22,36 +38,35 @@
     </div>
     <div class="sidebar-divider"></div>
     <div class="sidebar-icons">
-      <button class="nav-icon active" onclick="switchTab('games')" title="Games">
+      <button class="nav-icon active" onclick="switchTab('games')">
         <i class="fa-solid fa-gamepad"></i>
         <span class="nav-tooltip">Games</span>
       </button>
-      <button class="nav-icon" onclick="switchTab('chat')" title="Chat">
+      <button class="nav-icon" onclick="switchTab('chat')">
         <i class="fa-solid fa-comment"></i>
         <span class="nav-tooltip">Chat</span>
       </button>
-      <button class="nav-icon" onclick="switchTab('media')" title="Media">
+      <button class="nav-icon" onclick="switchTab('media')">
         <i class="fa-solid fa-film"></i>
         <span class="nav-tooltip">Media</span>
       </button>
-      <button class="nav-icon" onclick="switchTab('partners')" title="Partners">
+      <button class="nav-icon" onclick="switchTab('partners')">
         <i class="fa-solid fa-handshake"></i>
         <span class="nav-tooltip">Partners</span>
       </button>
     </div>
     <div class="sidebar-spacer"></div>
     <div class="sidebar-bottom">
-      <button class="nav-icon" onclick="switchTab('settings')" title="Settings">
+      <button class="nav-icon" onclick="switchTab('settings')">
         <i class="fa-solid fa-gear"></i>
         <span class="nav-tooltip">Settings</span>
       </button>
     </div>
   </nav>
 
-  <!-- Page content area -->
+  <!-- Page content -->
   <div class="page-wrap">
     <main id="main-content"></main>
-
     <footer>
       <button onclick="showDialog('dmca')"><i class="fa-solid fa-scale-balanced"></i> DMCA</button>
       <button onclick="showDialog('contact')"><i class="fa-solid fa-envelope"></i> Contact</button>
@@ -59,9 +74,10 @@
     </footer>
   </div>
 
+  <!-- Game overlay -->
   <div id="game-overlay" class="hidden">
     <div class="game-header">
-      <div class="game-info"><h2 id="game-title"></h2></div>
+      <h2 id="game-title"></h2>
       <div class="game-controls">
         <button onclick="fullscreenGame()" title="Fullscreen"><i class="fa-solid fa-expand"></i></button>
         <button onclick="openGameAboutBlank()" title="about:blank"><i class="fa-solid fa-up-right-from-square"></i></button>
@@ -72,20 +88,21 @@
     <iframe id="game-iframe" allowfullscreen></iframe>
   </div>
 
+  <!-- Dialogs -->
   <div id="dialog-overlay" class="hidden" onclick="closeDialog()">
     <div class="dialog-box" onclick="event.stopPropagation()">
       <button class="dialog-close" onclick="closeDialog()"><i class="fa-solid fa-xmark"></i></button>
       <h2 id="dialog-title"></h2>
       <p id="dialog-desc"></p>
-      <button onclick="closeDialog()">ok bitchas</button>
+      <button onclick="closeDialog()">Got it!</button>
     </div>
   </div>
 
   <div id="beta-overlay" class="hidden" onclick="closeBeta()">
     <div class="dialog-box" onclick="event.stopPropagation()">
       <button class="dialog-close" onclick="closeBeta()"><i class="fa-solid fa-xmark"></i></button>
-      <h2><i class="fa-solid fa-flask"></i> Beta Mode</h2>
-      <p>This is in beta lilbro dont expect it to be good</p>
+      <h2><i class="fa-solid fa-flask"></i> Beta</h2>
+      <p>this is in beta lilbro dont expect it to be good</p>
       <button onclick="closeBeta()">Got it!</button>
     </div>
   </div>
