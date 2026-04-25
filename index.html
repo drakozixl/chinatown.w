@@ -9,27 +9,55 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <!-- Grey particle canvas -->
   <canvas id="particle-canvas"></canvas>
 
-  <header>
-    <div class="header-bar">
-      <div class="logo-group">
-        <img src="https://www.image2url.com/r2/default/images/1776781342340-eff4309f-5ae6-44db-bccb-8fb24ed120dc.png" alt="China Town" class="logo">
-        <span class="logo-text">China Town</span>
+  <!-- Sidebar Nav -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo" onclick="switchTab('home')" title="Home">
+      <div class="logo-frame">
+        <img src="https://www.image2url.com/r2/default/images/1776781342340-eff4309f-5ae6-44db-bccb-8fb24ed120dc.png" alt="CT">
       </div>
-      <nav class="tabs" id="tabs">
-        <button class="tab-btn active" onclick="switchTab('home')"><i class="fa-solid fa-house"></i> <span class="tab-label">Home</span></button>
-        <button class="tab-btn" onclick="switchTab('games')"><i class="fa-solid fa-gamepad"></i> <span class="tab-label">Games</span></button>
-        <button class="tab-btn" onclick="switchTab('chat')"><i class="fa-solid fa-comment"></i> <span class="tab-label">Chat</span></button>
-        <button class="tab-btn" onclick="switchTab('media')"><i class="fa-solid fa-film"></i> <span class="tab-label">Media</span></button>
-        <button class="tab-btn" onclick="switchTab('apps')"><i class="fa-solid fa-grip"></i> <span class="tab-label">Apps</span></button>
-        <button class="tab-btn" onclick="switchTab('partners')"><i class="fa-solid fa-handshake"></i> <span class="tab-label">Partners</span></button>
-        <button class="tab-btn" onclick="switchTab('settings')"><i class="fa-solid fa-gear"></i> <span class="tab-label">Settings</span></button>
-      </nav>
     </div>
-  </header>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-icons">
+      <button class="nav-icon active" onclick="switchTab('games')" title="Games">
+        <i class="fa-solid fa-gamepad"></i>
+        <span class="nav-tooltip">Games</span>
+      </button>
+      <button class="nav-icon" onclick="switchTab('chat')" title="Chat">
+        <i class="fa-solid fa-comment"></i>
+        <span class="nav-tooltip">Chat</span>
+      </button>
+      <button class="nav-icon" onclick="switchTab('media')" title="Media">
+        <i class="fa-solid fa-film"></i>
+        <span class="nav-tooltip">Media</span>
+      </button>
+      <button class="nav-icon" onclick="switchTab('partners')" title="Partners">
+        <i class="fa-solid fa-handshake"></i>
+        <span class="nav-tooltip">Partners</span>
+      </button>
+    </div>
+    <div class="sidebar-spacer"></div>
+    <div class="sidebar-bottom">
+      <button class="nav-icon" onclick="switchTab('settings')" title="Settings">
+        <i class="fa-solid fa-gear"></i>
+        <span class="nav-tooltip">Settings</span>
+      </button>
+    </div>
+  </nav>
 
-  <main id="main-content"></main>
+  <!-- Page content area -->
+  <div class="page-wrap">
+    <main id="main-content"></main>
+
+    <footer>
+      <button onclick="showDialog('dmca')"><i class="fa-solid fa-scale-balanced"></i> DMCA</button>
+      <button onclick="showDialog('contact')"><i class="fa-solid fa-envelope"></i> Contact</button>
+      <button onclick="showDialog('privacy')"><i class="fa-solid fa-shield-halved"></i> Privacy</button>
+    </footer>
+  </div>
 
   <div id="game-overlay" class="hidden">
     <div class="game-header">
@@ -44,18 +72,12 @@
     <iframe id="game-iframe" allowfullscreen></iframe>
   </div>
 
-  <footer>
-    <button onclick="showDialog('dmca')"><i class="fa-solid fa-scale-balanced"></i> DMCA</button>
-    <button onclick="showDialog('contact')"><i class="fa-solid fa-envelope"></i> Contact</button>
-    <button onclick="showDialog('privacy')"><i class="fa-solid fa-shield-halved"></i> Privacy Policy</button>
-  </footer>
-
   <div id="dialog-overlay" class="hidden" onclick="closeDialog()">
     <div class="dialog-box" onclick="event.stopPropagation()">
       <button class="dialog-close" onclick="closeDialog()"><i class="fa-solid fa-xmark"></i></button>
       <h2 id="dialog-title"></h2>
       <p id="dialog-desc"></p>
-      <button onclick="closeDialog()">Got it!</button>
+      <button onclick="closeDialog()">ok bitchas</button>
     </div>
   </div>
 
